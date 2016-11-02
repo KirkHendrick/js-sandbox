@@ -1,0 +1,22 @@
+{
+  "name": "functional-sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KirkHendrick/functional-sandbox.git"
+  },
+  "author": "Kirk Hendrick <hendrick.kirk@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KirkHendrick/functional-sandbox/issues"
+  },
+  "homepage": "https://github.com/KirkHendrick/functional-sandbox#readme"
+}
