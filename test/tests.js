@@ -98,6 +98,131 @@ describe('Utility Functions: ', function () {
                 curriedAdd(1)(3)
             );
         });
+
+        it('should curry a function with multiple parameters', function () {
+            function add(a, b, c, d) {
+                return a + b + c + d;
+            }
+
+            const curriedAdd = _.curry(add);
+
+            assert.deepEqual(
+                add(1, 3, 3, 9),
+                curriedAdd(1)(3)(3)(9)
+            );
+        });
+    });
+
+    describe('#looseCurry()', function () {
+        it('should curry a function using multiple arguments', function () {
+            function add(a, b, c) {
+                return a + b + c;
+            }
+
+            const curriedAdd = _.looseCurry(add);
+
+            assert.deepEqual(
+                add(1, 2, 3),
+                curriedAdd(1, 2)(3)
+            );
+        });
+    });
+
+    describe('#uncurry()', function () {
+        it('should allow a curried function to be called with its arguments at once', function () {
+            function add(a, b, c, d) {
+                return a + b + c + d;
+            }
+
+            const curriedAdd = _.curry(add),
+                uncurriedAdd = _.uncurry(curriedAdd);
+
+            assert.deepEqual(
+                curriedAdd(1)(3)(3)(9),
+                uncurriedAdd(1, 3, 3, 9)
+            );
+        });
+    });
+
+    describe('#unary()', function () {
+        it('should return a function that only calls the first argument', function () {
+            function testArguments(arg1, arg2) {
+                if (arg2) {
+                    return arg2;
+                }
+                return arg1;
+            }
+
+            const oneArg = _.unary(testArguments);
+
+            assert.deepEqual(
+                'arg2',
+                testArguments('arg1', 'arg2')
+            );
+
+            assert.deepEqual(
+                'arg1',
+                oneArg('arg1')
+            );
+        });
+
+        it('should ignore all other arguments', function () {
+            function testArguments(arg1, arg2) {
+                if (arg2) {
+                    return arg2;
+                }
+                return arg1;
+            }
+
+            const oneArg = _.unary(testArguments);
+
+            assert.deepEqual(
+                'arg2',
+                testArguments('arg1', 'arg2')
+            );
+
+            assert.deepEqual(
+                'arg1',
+                oneArg('arg1', 'arg2')
+            );
+        });
+    });
+
+    describe('#identity()', function () {
+        it('should return the value passed in', function () {
+            assert.deepEqual(
+                'testInput',
+                _.identity('testInput')
+            );
+        });
+    });
+
+    describe('#constant()', function () {
+        it('should return a function that returns the value passed in', function () {
+            const testValue = 'testValue';
+
+            assert.deepEqual(
+                'testValue',
+                _.constant('testValue')()
+            );
+        });
+    });
+
+    describe('#not', function () {
+        it('should return the results if the predicate is not met', function () {
+            function isFive(v) {
+                return v === 5;
+            }
+
+            const isntFive = _.not(isFive);
+
+            assert.ok(isFive(5));
+
+            assert.deepEqual(
+                false,
+                isntFive(5)
+            );
+        });
     });
 });
 
