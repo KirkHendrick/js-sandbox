@@ -2,7 +2,7 @@ exports.util = (function () {
 
     'use strict';
 
-    return {
+    var publicApi = {
 
         partial: function (fn, ...args) {
             return function partiallyApplied(...laterArgs) {
@@ -27,7 +27,7 @@ exports.util = (function () {
                 return function curried(nextArg) {
                     const args = prevArgs.concat([nextArg]);
 
-                    if(args.length >= arity) {
+                    if (args.length >= arity) {
                         return fn(...args);
                     }
                     else {
@@ -42,7 +42,7 @@ exports.util = (function () {
                 return function curried(...nextArgs) {
                     const args = prevArgs.concat(nextArgs);
 
-                    if(args.length >= arity) {
+                    if (args.length >= arity) {
                         return fn(...args);
                     }
                     else {
@@ -84,7 +84,19 @@ exports.util = (function () {
             return function negated(...args) {
                 return !predicate(...args);
             }
+        },
+
+        compose: function (...fns) {
+            return fns.reverse().reduce(function reduceComposition(fn1, fn2) {
+                return function composed(...args) {
+                    return fn2( fn1(...args));
+                };
+            });
         }
     };
+
+    publicApi.pipe = publicApi.reverseArgs(publicApi.compose);
+
+    return publicApi;
 
 })();

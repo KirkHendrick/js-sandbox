@@ -208,7 +208,7 @@ describe('Utility Functions: ', function () {
         });
     });
 
-    describe('#not', function () {
+    describe('#not()', function () {
         it('should return the results if the predicate is not met', function () {
             function isFive(v) {
                 return v === 5;
@@ -221,6 +221,90 @@ describe('Utility Functions: ', function () {
             assert.deepEqual(
                 false,
                 isntFive(5)
+            );
+        });
+
+        it('should not return the results if the predicate is met', function () {
+            function isFive(v) {
+                return v === 5;
+            }
+
+            const isntFive = _.not(isFive);
+
+            assert.ok(isFive(5));
+
+            assert.ok(isntFive(9));
+        });
+    });
+
+    describe('#compose()', function () {
+        it('should return the composition of two functions', function () {
+            function timesTen(a) {
+                return 10 * a;
+            }
+
+            function timesTwenty(a) {
+                return 20 * a;
+            }
+
+            const timesTwoHundred = _.compose(timesTen, timesTwenty);
+
+            assert.deepEqual(
+                timesTwenty(timesTen(5)),
+                timesTwoHundred(5)
+            );
+        });
+
+        it('should be able to compose more than 2 functions', function () {
+            function timesTen(a) {
+                return 10 * a;
+            }
+
+            function timesTwenty(a) {
+                return 20 * a;
+            }
+
+            const timesTwoThousand = _.compose(timesTen, timesTwenty, timesTen);
+
+            assert.deepEqual(
+                timesTen(timesTwenty(timesTen(5))),
+                timesTwoThousand(5)
+            );
+        });
+
+        it('should execute functions from right to left', function () {
+            function doubleString(str) {
+                return str + str;
+            }
+
+            function addHello(str) {
+                return str + 'hello';
+            }
+
+            const doubleThenHello = _.compose(addHello, doubleString);
+
+            assert.deepEqual(
+                addHello(doubleString('test')),
+                doubleThenHello('test')
+            );
+        });
+    });
+
+    describe('#pipe()', function () {
+        it('should compose functions from left to right', function () {
+            function doubleString(str) {
+                return str + str;
+            }
+
+            function addHello(str) {
+                return str + 'hello';
+            }
+
+            const doubleThenHello = _.pipe(doubleString, addHello);
+
+            assert.deepEqual(
+                addHello(doubleString('test')),
+                doubleThenHello('test')
             );
         });
     });
