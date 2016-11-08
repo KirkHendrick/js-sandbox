@@ -308,5 +308,25 @@ describe('Utility Functions: ', function () {
             );
         });
     });
+
+    describe('#prop()', function () {
+        it('should return the value at given property of given object', function () {
+            const obj = {
+                value: 'testValue'
+            };
+
+            const value = _.prop(obj, 'value');
+
+            assert.deepEqual('testValue', value);
+        });
+    });
+
+    describe('#setProp()', function () {
+        it('should set the given property to a given value on a new object', function () {
+            const result = _.setProp('value', true);
+
+            assert.ok(result.value);
+        });
+    });
 });
 

@@ -2,7 +2,7 @@ exports.util = (function () {
 
     'use strict';
 
-    var publicApi = {
+    let publicApi = {
 
         partial: function (fn, ...args) {
             return function partiallyApplied(...laterArgs) {
@@ -92,6 +92,16 @@ exports.util = (function () {
                     return fn2( fn1(...args));
                 };
             });
+        },
+
+        prop: function (obj, property) {
+            return obj[property];
+        },
+
+        setProp: function (propName, value) {
+            return {
+                [propName] : value
+            }
         }
     };
 
