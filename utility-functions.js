@@ -102,6 +102,24 @@ exports.util = (function () {
             return {
                 [propName] : value
             }
+        },
+
+        map: function (arr, fn) {
+            let newArr = [];
+            arr.forEach(function (element, index, array) {
+                newArr.push(fn(element, index, array));
+            });
+            return newArr;
+        },
+
+        filter: function (arr, predicateFn) {
+            let filtered = [];
+            arr.forEach(function (element, index, array) {
+                if(predicateFn(element, index, array)) {
+                    filtered.push(element);
+                }
+            });
+            return filtered;
         }
     };
 

@@ -328,5 +328,60 @@ describe('Utility Functions: ', function () {
             assert.ok(result.value);
         });
     });
+
+    describe('#map()', function () {
+        it('should perform the given function operation on each element of an array', function () {
+            function add3(v) {
+                return v + 3;
+            }
+
+            const arr = [1, 2, 3],
+                addedArr = _.map(arr, add3);
+
+            assert.deepEqual(4, addedArr[0]);
+            assert.deepEqual(5, addedArr[1]);
+            assert.deepEqual(6, addedArr[2]);
+        });
+
+        it('should not mutate the original array', function () {
+            function add3(v) {
+                return v + 3;
+            }
+
+            const arr = [1, 2, 3],
+                addedArr = _.map(arr, add3);
+
+            assert.deepEqual(1, arr[0]);
+            assert.deepEqual(2, arr[1]);
+            assert.deepEqual(3, arr[2]);
+        });
+    });
+
+    describe('#filter()', function () {
+        it('should return an array that only has elements that match the predicate function', function () {
+            function lessThanFive(v) {
+                return v < 5;
+            }
+
+            const arr = [4, 5, 8, 0, 1, 7],
+                filteredArr = _.filter(arr, lessThanFive);
+
+            assert.deepEqual(3, filteredArr.length);
+            assert.deepEqual(4, filteredArr[0]);
+            assert.deepEqual(0, filteredArr[1]);
+            assert.deepEqual(1, filteredArr[2]);
+        });
+
+        it('should not mutate original array', function () {
+            function lessThanFive(v) {
+                return v < 5;
+            }
+
+            const arr = [4, 5, 8, 0, 1, 7],
+                filteredArr = _.filter(arr, lessThanFive);
+
+            assert.deepEqual(6, arr.length);
+        });
+    });
 });
 
