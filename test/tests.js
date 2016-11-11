@@ -188,6 +188,38 @@ describe('Utility Functions: ', function () {
         });
     });
 
+    describe('#binary()', function () {
+        it('should return a function that only uses the first two arguments of the given function', function () {
+            function sum(...args) {
+                let sum = 0;
+                args.forEach(function (arg) {
+                    sum += arg;
+                });
+                return sum;
+            }
+
+            assert.deepEqual(5, sum(2, 3));
+            assert.deepEqual(5, sum(2, 2, 1));
+
+            const binarySum = _.binary(sum);
+
+            assert.deepEqual(
+                5,
+                binarySum(3, 2)
+            );
+
+            assert.deepEqual(
+                5,
+                binarySum(3, 2, 3)
+            );
+
+            assert.deepEqual(
+                5,
+                binarySum(3, 2, 3, 5, 9, 9)
+            );
+        });
+    });
+
     describe('#identity()', function () {
         it('should return the value passed in', function () {
             assert.deepEqual(
@@ -381,6 +413,37 @@ describe('Utility Functions: ', function () {
                 filteredArr = _.filter(arr, lessThanFive);
 
             assert.deepEqual(6, arr.length);
+        });
+    });
+
+    describe('#reduce()', function () {
+        it('should use given reducer function to accumulate data in array', function () {
+            function sum(accumulator, value) {
+                return accumulator + value;
+            }
+
+            const arr = [5, 10, 15],
+                arrSum = _.reduce(arr, sum);
+
+            assert.deepEqual(
+                5 + 10 + 15,
+                arrSum
+            );
+        });
+
+        it('should take an initial value as a parameter', function () {
+            function sum(accumulator, value) {
+                return accumulator + value;
+            }
+
+            const arr = [10, 15],
+                arrSum = _.reduce(arr, sum, 5);
+
+            assert.deepEqual(
+                5 + 10 + 15,
+                arrSum
+            );
+
         });
     });
 });

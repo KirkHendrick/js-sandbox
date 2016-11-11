@@ -70,6 +70,12 @@ exports.util = (function () {
             }
         },
 
+        binary: function (fn) {
+            return function twoArgs(arg1, arg2) {
+                return fn(arg1, arg2);
+            }
+        },
+
         identity: function (v) {
             return v;
         },
@@ -89,7 +95,7 @@ exports.util = (function () {
         compose: function (...fns) {
             return fns.reverse().reduce(function reduceComposition(fn1, fn2) {
                 return function composed(...args) {
-                    return fn2( fn1(...args));
+                    return fn2(fn1(...args));
                 };
             });
         },
@@ -100,7 +106,7 @@ exports.util = (function () {
 
         setProp: function (propName, value) {
             return {
-                [propName] : value
+                [propName]: value
             }
         },
 
@@ -115,11 +121,27 @@ exports.util = (function () {
         filter: function (arr, predicateFn) {
             let filtered = [];
             arr.forEach(function (element, index, array) {
-                if(predicateFn(element, index, array)) {
+                if (predicateFn(element, index, array)) {
                     filtered.push(element);
                 }
             });
             return filtered;
+        },
+
+        reduce: function (arr, reducerFn, initialValue) {
+            let accumulator = arr[0],
+                startIndex = 1;
+
+            if (arguments.length === 3) {
+                accumulator = initialValue;
+                startIndex = 0;
+            }
+
+            for (let i = startIndex; i < arr.length; i++) {
+                accumulator = reducerFn(accumulator, arr[i], i, arr);
+            }
+
+            return accumulator;
         }
     };
 
