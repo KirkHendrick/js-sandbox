@@ -446,5 +446,21 @@ describe('Utility Functions: ', function () {
 
         });
     });
+
+    describe('#unique()', function () {
+        it('should filter an array to include only unique values', function () {
+            const arr = [0, 4, 5, 5, 4, 7],
+                uniqueArr = _.unique(arr);
+
+            assert.deepEqual(4, uniqueArr.length);
+        });
+        
+        it('should not mutate original array', function () {
+            const arr = [0, 4, 5, 5, 4, 7],
+                uniqueArr = _.unique(arr);
+
+            assert.deepEqual(6, arr.length);
+        });
+    });
 });
 

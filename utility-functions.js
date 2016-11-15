@@ -142,6 +142,12 @@ exports.util = (function () {
             }
 
             return accumulator;
+        },
+
+        unique: function (arr) {
+            return this.filter(arr, function isUnique(element, index) {
+                return arr.indexOf(element) === index;
+            });
         }
     };
 
