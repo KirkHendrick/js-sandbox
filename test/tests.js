@@ -462,5 +462,51 @@ describe('Utility Functions: ', function () {
             assert.deepEqual(6, arr.length);
         });
     });
+
+    describe('#flatten()', function () {
+        it('should return an array of depth 1 from given array', function () {
+            const arr = [0, [1, 2], 3, [4, 5, 6, [7, 8, [9]]]],
+                flattenedArr = _.flatten(arr);
+
+            assert.deepEqual(10, flattenedArr.length);
+
+            flattenedArr.forEach(function (element, index) {
+                assert.deepEqual(index, element);
+            });
+        });
+
+        it('should flatten to a given depth', function () {
+            const arr = [0, [1, 2], 3, [4, 5, 6, [7, 8, [9]]]],
+                flattenedArr = _.flatten(arr, 1);
+
+            assert.deepEqual(8, flattenedArr.length);
+
+            assert.deepEqual([7, 8, [9]], flattenedArr[7]);
+        });
+    });
+
+    describe('#flatMap()', function () {
+        it('should map and flatten given array', function () {
+            function squareRoot(element) {
+                return element.squareRoot;
+            }
+
+            const arr = [
+                {square: 4, squareRoot: [2, -2]},
+                {square: 9, squareRoot: [3, -3]},
+                {square: 16, squareRoot: [4, -4]}
+            ];
+
+            assert.deepEqual(
+                [[2, -2], [3, -3], [4, -4]],
+                _.map(arr, squareRoot)
+            );
+
+            assert.deepEqual(
+                [2, -2, 3, -3, 4, -4],
+                _.flatMap(arr, squareRoot)
+            );
+        });
+    });
 });
 

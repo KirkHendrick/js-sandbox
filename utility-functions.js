@@ -148,6 +148,22 @@ exports.util = (function () {
             return this.filter(arr, function isUnique(element, index) {
                 return arr.indexOf(element) === index;
             });
+        },
+
+        flatten: function flatten(arr, depth = Infinity) {
+            return arr.reduce(function (list, v) {
+                return list.concat(
+                    depth > 0 ?
+                        (depth > 1 && Array.isArray(v) ? flatten(v, depth - 1) : v ) :
+                        [v]
+                );
+            }, []);
+        },
+
+        flatMap: function (arr, fn) {
+            return arr.reduce(function (list, v) {
+                return list.concat(fn(v));
+            }, []);
         }
     };
 
