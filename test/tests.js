@@ -508,5 +508,31 @@ describe('Utility Functions: ', function () {
             );
         });
     });
+
+    describe('#guard()', function () {
+        it('should return a function that returns the argument if null', function () {
+            function getId(obj) {
+                return obj.id;
+            }
+
+            const testObj = null;
+
+            const guardedObjId = _.guard(getId);
+
+            assert.deepEqual(testObj, guardedObjId(testObj));
+        });
+
+        it('should return a function that returns the argument passed to the function if not null', function () {
+            function getId(obj) {
+                return obj.id;
+            }
+
+            const testObj = { id : 'testId' };
+
+            const guardedObjId = _.guard(getId);
+
+            assert.deepEqual('testId', guardedObjId(testObj));
+        });
+    });
 });
 

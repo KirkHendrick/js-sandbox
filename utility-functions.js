@@ -164,6 +164,12 @@ exports.util = (function () {
             return arr.reduce(function (list, v) {
                 return list.concat(fn(v));
             }, []);
+        },
+
+        guard: function (fn) {
+            return function (arg) {
+                return arg != null ? fn(arg) : arg;
+            }
         }
     };
 
