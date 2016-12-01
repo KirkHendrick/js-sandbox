@@ -536,3 +536,24 @@ describe('Utility Functions: ', function () {
     });
 });
 
+describe('Strategies', function () {
+    describe('List Operations', function () {
+        specify('multiple unary list operations can be composed to reduce list iterations', function () {
+            const addFive = num => num + 5,
+                square = num => num * num,
+                double = num => num * 2,
+                nums = [
+                    2, 3, 4, 5, 6
+                ];
+
+            assert.deepEqual(
+                nums
+                    .map(addFive)
+                    .map(square)
+                    .map(double),
+                nums
+                    .map(_.pipe(addFive, square, double))
+            );
+        });
+    });
+});
