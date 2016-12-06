@@ -454,7 +454,7 @@ describe('Utility Functions: ', function () {
 
             assert.deepEqual(4, uniqueArr.length);
         });
-        
+
         it('should not mutate original array', function () {
             const arr = [0, 4, 5, 5, 4, 7],
                 uniqueArr = _.unique(arr);
@@ -527,12 +527,54 @@ describe('Utility Functions: ', function () {
                 return obj.id;
             }
 
-            const testObj = { id : 'testId' };
+            const testObj = {id: 'testId'};
 
             const guardedObjId = _.guard(getId);
 
             assert.deepEqual('testId', guardedObjId(testObj));
         });
+    });
+
+    describe('#trampoline()', function () {
+        it('should return a function that keeps running as long as a function is returned', function () {
+            function sum(num1, num2, ...nums) {
+                num1 = num1 + num2;
+                if (nums.length == 0) {
+                    return num1;
+                }
+                return sum(num1, ...nums);
+            }
+
+            function _sum(num1, num2, ...nums) {
+                num1 = num1 + num2;
+                if (nums.length == 0) {
+                    return num1;
+                }
+                return () => _sum(num1, ...nums);
+            }
+
+            assert.deepEqual(
+                sum(1, 3, 4, 5, 6, 7, 8),
+                _.trampoline(_sum)(1, 3, 4, 5, 6, 7, 8)
+            );
+        });
+
+        // it('should allow a recursive function to be invoked in CPS style and therefore not be subject to stack overflow', function() {
+        //     function sum(num1, num2, ...nums) {
+        //         num1 = num1 + num2;
+        //         if (nums.length == 0) {
+        //             return num1;
+        //         }
+        //         return () => sum(num1, ...nums);
+        //     }
+        //
+        //     let arr = [];
+        //     for(let i = 0; i < 200000; i++) {
+        //         arr.push(i);
+        //     }
+        //
+        //     _.trampoline(sum)(...arr);
+        // });
     });
 });
 
@@ -556,4 +598,6 @@ describe('Strategies', function () {
             );
         });
     });
+
+    describe('Recursion', function () {});
 });

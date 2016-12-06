@@ -170,6 +170,18 @@ exports.util = (function () {
             return function (arg) {
                 return arg != null ? fn(arg) : arg;
             }
+        },
+
+        trampoline: function (fn) {
+            return function trampolined(...args) {
+                let result = fn(...args);
+
+                while(typeof result == 'function') {
+                    result = result();
+                }
+
+                return result;
+            }
         }
     };
 
