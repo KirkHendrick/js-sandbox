@@ -1,5 +1,5 @@
 {
-  "name": "functional-sandbox",
+  "name": "js-sandbox",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,12 +11,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KirkHendrick/functional-sandbox.git"
+    "url": "git+https://github.com/KirkHendrick/js-sandbox.git"
   },
   "author": "Kirk Hendrick <hendrick.kirk@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KirkHendrick/functional-sandbox/issues"
+    "url": "https://github.com/KirkHendrick/js-sandbox/issues"
   },
-  "homepage": "https://github.com/KirkHendrick/functional-sandbox#readme"
+  "homepage": "https://github.com/KirkHendrick/js-sandbox#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^5.0.0",
+    "gulp-util": "^3.0.8",
+    "gulp-watch": "^5.0.0",
+    "package.json": "^2.0.1"
+  }
 }
