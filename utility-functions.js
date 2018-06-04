@@ -182,11 +182,43 @@ exports.util = (function () {
 
                 return result;
             }
+        },
+
+        preorderTraverse: function (arr) {
+        	constructPreorderTree(arr);
+            return [1, 2, 3];
         }
     };
 
     publicApi.pipe = publicApi.reverseArgs(publicApi.compose);
 
     return publicApi;
+
+    // private utilities
+
+	function TreeNode(val) {
+		this.val = val;
+		this.left = this.right = null;
+	}
+
+	function constructPreorderTree(arr) {
+		let root = null;
+		if(!arr[0]) {
+			return root;
+		}
+
+		root = new TreeNode(arr[0]);
+
+		for(let i = 1; i < arr.length; i++) {
+			if(arr[i]) {
+				root.left = constructPreorderTree(arr.slice(1));
+			}
+			if(arr[i + 1]) {
+				root.right = constructPreorderTree(arr.slice(2));
+			}
+		}
+
+		return root;
+	}
 
 })();

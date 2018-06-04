@@ -601,3 +601,35 @@ describe('Strategies', function () {
 
     describe('Recursion', function () {});
 });
+
+describe('Data Structures & Algorithms', function () {
+	describe('Trees', function () {
+		describe('#preorderTraverse()', function () {
+			/*
+				[1, null, 2, 3]
+				1
+				 \
+				  2
+				 /
+				3
+			 */
+			it('should return a list', function () {
+				const result = _.preorderTraverse([1, null, 2, 3]);
+
+				assert(Array.isArray(result));
+			});
+
+			it('should traverse in order of root, left, right', function () {
+				const result = _.preorderTraverse();
+
+				assert.deepEqual(result, [1, 2, 3]);
+			});
+
+			it('should traverse in order of root, left, right', function () {
+				const result = _.preorderTraverse([1, 2, null, 3, 4]);
+
+				assert.deepEqual(result, [1, 2, 3, 4]);
+			});
+		});
+	});
+});
